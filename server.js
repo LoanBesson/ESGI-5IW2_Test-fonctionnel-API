@@ -1,5 +1,6 @@
 const express = require('express');
 const logger = require('morgan');
+const books = require('./routes/books');
 const movies = require('./routes/movies');
 const users = require('./routes/users');
 const bodyParser = require('body-parser');
@@ -18,6 +19,7 @@ app.get('/', function (req, res) {
 app.use('/users', users);
 
 // private route
+app.use('/books', validateUser, books);
 app.use('/movies', validateUser, movies);
 
 function validateUser(req, res, next) {
