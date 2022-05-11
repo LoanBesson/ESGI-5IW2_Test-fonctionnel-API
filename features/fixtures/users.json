@@ -1,0 +1,17 @@
+{
+    "model": "User",
+    "data": {
+        "admin": {
+            "name": "Dorian",
+            "email": "user@technique.Fr",
+            "password": "password",
+            "role": "admin"
+        },
+        "user": {
+            "name": "Dorian",
+            "email": "user@user.fr",
+            "password": "password",
+            "role": "user"
+        }
+    }
+}

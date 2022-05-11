@@ -29,7 +29,7 @@ module.exports = {
                const token = jwt.sign({ id: userInfo._id, role: userInfo.token }, req.app.get('secretKey'), { expiresIn: '1h' });
                res.json({token : token});
             } else {
-               res.sendStatus(404);
+               res.sendStatus(400);
             }
          }
       });

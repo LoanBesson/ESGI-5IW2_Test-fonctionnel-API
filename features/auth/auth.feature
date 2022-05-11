@@ -30,4 +30,4 @@ Feature: Authentication tests
                 | password | zimbabwe |
                 |role | user |  
             When I request "POST" "/users/authenticate" with payload
-            Then The response status should be 404
+            Then The response status should be 400

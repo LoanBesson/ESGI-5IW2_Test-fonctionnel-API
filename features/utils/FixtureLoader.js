@@ -1,4 +1,4 @@
-const db = require("../../models");
+const db = require("../../app/api/models");
 const ReferenceManager = require("./ReferenceManager");
 
 function interpolate(obj) {
@@ -21,7 +21,7 @@ module.exports = async function fixtureLoader(...paths) {
     for (let key in fixture.data) {
       let record = fixture.data[key];
       interpolate(record);
-      record = await Model.create(record);
+      record = await new 
       ReferenceManager.setReference(key, record);
     }
   }

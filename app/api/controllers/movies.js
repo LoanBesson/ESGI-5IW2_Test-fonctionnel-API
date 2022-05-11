@@ -6,7 +6,7 @@ module.exports = {
       if (err) {
         next(err);
       } else {
-        res.json({ status: "success", message: "Movie found!!!", data: { movies: movieInfo } });
+        res.json(movieInfo);
       }
     });
   },
@@ -19,7 +19,7 @@ module.exports = {
         for (let movie of movies) {
           moviesList.push({ id: movie._id, name: movie.name, released_on: movie.released_on });
         }
-        res.json({ status: "success", message: "Movies list found!!!", data: { movies: moviesList } });
+        res.json(moviesList);
 
       }
     });
@@ -29,7 +29,7 @@ module.exports = {
       if (err)
         next(err);
       else {
-        res.json({ status: "success", message: "Movie updated successfully!!!", data: null });
+        res.json(movieInfo);
       }
     });
   },
@@ -38,7 +38,7 @@ module.exports = {
       if (err)
         next(err);
       else {
-        res.json({ status: "success", message: "Movie deleted successfully!!!", data: null });
+        res.sendStatus(204)
       }
     });
   },
@@ -47,8 +47,7 @@ module.exports = {
       if (err)
         next(err);
       else
-        res.json({ status: "success", message: "Movie added successfully!!!", data: null });
-
+        res.status(201).json(result);
     });
   },
 }
