@@ -6,14 +6,14 @@ module.exports = {
    create: function (req, res, next) {
       userModel.findOne({ email: req.body.email }, function (err, userInfo) {
          if (!userInfo) {
-            userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password, role: 'user' }, function (err, result) { //create new users, this function has model query too create new user into database
+            userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password, role: req.body.role }, function (err, result) { //create new users, this function has model query too create new user into database
                if (err)
                   next(err);
                else
-                  res.json({ status: "success", message: "User added successfully!!!", data: null });
+                  res.json(req.body);
             });
          } else {
-            res.json({ status: "error", message: "Invalid email, user already exist !!!", data: null });
+            res.sendStatus(400);
          }
       });
    },
@@ -26,10 +26,10 @@ module.exports = {
             next(err);
          } else {
             if (bcrypt.compareSync(req.body.password, userInfo.password)) {     //if password match, generate jwt token by passing user id and secret key, and have set 1hr validity of the token
-               const token = jwt.sign({ id: userInfo._id }, req.app.get('secretKey'), { expiresIn: '1h' });
-               res.json({ status: "success", message: "user found!!!", data: { user: userInfo, token: token } });
+               const token = jwt.sign({ id: userInfo._id, role: userInfo.token }, req.app.get('secretKey'), { expiresIn: '1h' });
+               res.json({token : token});
             } else {
-               res.json({ status: "error", message: "Invalid email/password!!!", data: null });
+               res.sendStatus(404);
             }
          }
       });
