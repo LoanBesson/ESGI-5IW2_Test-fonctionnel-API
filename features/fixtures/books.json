@@ -1,0 +1,15 @@
+{
+    "model": "Book",
+    "data": {
+        "book1": {
+            "title": "The Hobbit",
+            "author": "J.R.R. Tolkien",
+            "year": "1937"
+        },
+        "book2": {
+            "title": "The Fellowship of the Ring",
+            "author": "J.R.R. Tolkien",
+            "year": "1954"
+        }
+    }
+}
