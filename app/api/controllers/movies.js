@@ -1,7 +1,6 @@
 const movieModel = require('../models/movies');
 module.exports = {
   getById: function (req, res, next) {
-    console.log(req.body);
     movieModel.findById(req.params.movieId, function (err, movieInfo) {
       if (err) {
         next(err);

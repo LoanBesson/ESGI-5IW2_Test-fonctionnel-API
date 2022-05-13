@@ -26,7 +26,7 @@ module.exports = {
             next(err);
          } else {
             if (bcrypt.compareSync(req.body.password, userInfo.password)) {     //if password match, generate jwt token by passing user id and secret key, and have set 1hr validity of the token
-               const token = jwt.sign({ id: userInfo._id, role: userInfo.token }, req.app.get('secretKey'), { expiresIn: '1h' });
+               const token = jwt.sign({ id: userInfo._id, role: userInfo.role }, req.app.get('secretKey'), { expiresIn: '1h' });
                res.json({token : token});
             } else {
                res.sendStatus(400);

@@ -1,11 +1,11 @@
 {
-    "model": "Book",
+    "model": "Movie",
     "data": {
-        "book1": {
+        "movie1": {
             "name": "The Hobbit",
             "released_on": "2022-02-02T00:00:00.000Z"
         },
-        "book2": {
+        "movie2": {
             "name": "Harry Potter",
             "released_on": "2022-02-02T00:00:00.000Z"
         }

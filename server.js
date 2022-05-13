@@ -5,7 +5,7 @@ const movies = require('./routes/movies');
 const users = require('./routes/users');
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
-var jwt = require('jsonwebtoken');
+const { jwt, verify } = require("jsonwebtoken");
 const app = express();
 app.set('secretKey', 'nodeRestApi'); // jwt secret token
 // connection to mongodb
@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 app.use('/users', users);
 
 // private route
-app.use('/books', validateUser, books);
+app.use('/books', validUserAndAdmin, books);
 app.use('/movies', validateUser, movies);
 
 function validateUser(req, res, next) {
@@ -27,13 +27,32 @@ function validateUser(req, res, next) {
     if (err) {
       res.json({ status: "error", message: err.message, data: null });
     } else {
-      // add user id to request
       req.body.userId = decoded.id;
       next();
     }
   });
 }
 
+async function validUserAndAdmin(req, res, next) {
+  let token = req.header("authorization");
+  if (!token) return res.status(401).send("No User");
+
+  if (token.startsWith("Bearer ")) {
+    token = token.substring(7, token.length);
+  }
+  try {
+    const verified = verify(token, req.app.get('secretKey'));
+    console.log(verified)
+    req.user = verified;
+    let user = await userModel.findOne({ isAdmin });
+    if (req.user && user.isAdmin === true) {
+      return next();
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(401).send({ msg: "Admin token is not valid" });
+  }
+}
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error
 app.use(function (req, res, next) {
